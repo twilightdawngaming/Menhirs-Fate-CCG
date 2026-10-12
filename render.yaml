@@ -1,0 +1,18 @@
+# ---------------------------------------------------------------------------
+# Render blueprint — the easiest host for the FULL game (story + online duels).
+#   1. push this repository to GitHub
+#   2. Render dashboard → New → Blueprint → pick the repo
+# Render builds the Dockerfile and gives you an https:// URL. Websockets
+# upgrade automatically on Render, so room-code duels work out of the box.
+# ---------------------------------------------------------------------------
+services:
+  - type: web
+    name: menhirs-fate
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production

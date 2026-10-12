@@ -1,0 +1,8 @@
+node_modules
+site
+tests
+tools
+*.md
+.git
+.github
+.netlify

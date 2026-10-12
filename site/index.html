@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Menhirs Fate: Weavers of Elandra</title>
+<link rel="stylesheet" href="css/style.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d1412'/%3E%3Cpath d='M16 4l4 8v16h-8V12z' fill='%239a7b3f'/%3E%3C/svg%3E" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ================================================== HOME -->
+  <section id="screen-home" class="screen active">
+    <div class="home-bg"></div>
+    <div class="home-inner">
+      <div class="title-block">
+        <div class="title-rune">ᛝ</div>
+        <h1>Menhirs Fate</h1>
+        <h2>Weavers of Elandra</h2>
+        <p class="tagline">The Corrupted have taken the east. Nine nations hold the west.
+        One standing stone still works &mdash; and you are the Weaver who has to agree with it.</p>
+      </div>
+      <nav class="menu">
+        <button class="menu-btn primary" data-go="map">
+          <span class="mb-icon">✦</span>
+          <span class="mb-title">The Story Campaign</span>
+          <span class="mb-sub" id="home-campaign-sub">Prologue &amp; six chapters</span>
+        </button>
+        <button class="menu-btn" data-go="quick">
+          <span class="mb-icon">⚔</span>
+          <span class="mb-title">Duel the Corrupted</span>
+          <span class="mb-sub">Pick a nation, fight the AI</span>
+        </button>
+        <button class="menu-btn" data-go="lobby">
+          <span class="mb-icon">⚑</span>
+          <span class="mb-title">Online Duel</span>
+          <span class="mb-sub">Room codes &middot; play a friend</span>
+        </button>
+        <button class="menu-btn" data-go="deck">
+          <span class="mb-icon">❖</span>
+          <span class="mb-title">Your Deck</span>
+          <span class="mb-sub" id="home-deck-sub">Deck builder &amp; collection</span>
+        </button>
+        <button class="menu-btn" data-go="rules">
+          <span class="mb-icon">⌘</span>
+          <span class="mb-title">Rules of the Duel</span>
+          <span class="mb-sub">Phases, spheres, keywords</span>
+        </button>
+      </nav>
+      <div class="home-foot">
+        <span class="coins">Saga <b id="home-saga">0</b></span>
+        <span class="sep">·</span>
+        <span id="home-progress">No chapters completed</span>
+        <span class="sep">·</span>
+        <button class="link" data-go="shop">Bank of Haven</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== MAP -->
+  <section id="screen-map" class="screen">
+    <header class="bar">
+      <button class="back" data-go="home">‹ Haven</button>
+      <h3>The Reclamation</h3>
+      <span class="bar-right" id="map-progress"></span>
+    </header>
+    <div class="map-wrap">
+      <div class="map-line"></div>
+      <div id="chapter-list" class="chapter-list"></div>
+    </div>
+  </section>
+
+  <!-- ================================================== STORY -->
+  <section id="screen-story" class="screen">
+    <header class="bar">
+      <button class="back" data-go="map">‹ Back</button>
+      <h3 id="story-title">Chapter</h3>
+      <span class="bar-right" id="story-subtitle"></span>
+    </header>
+    <div class="story-wrap">
+      <div class="story-scroll" id="story-body"></div>
+      <div class="story-side">
+        <div class="panel" id="story-briefing"></div>
+        <div class="panel" id="story-choice"></div>
+        <div class="story-actions">
+          <button class="btn big" id="story-continue" style="display:none">Continue</button>
+          <button class="btn big gold" id="story-duel" style="display:none">Begin the Duel</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== DECK -->
+  <section id="screen-deck" class="screen">
+    <header class="bar">
+      <button class="back" data-go="home">‹ Haven</button>
+      <h3>Your Deck</h3>
+      <span class="bar-right" id="deck-count"></span>
+    </header>
+    <div class="deck-wrap">
+      <div class="deck-side">
+        <div class="panel">
+          <h4>Deck</h4>
+          <div id="deck-list" class="deck-list"></div>
+          <div class="deck-stats" id="deck-stats"></div>
+          <div class="row">
+            <button class="btn" id="deck-autofill">Auto-fill to 40</button>
+            <button class="btn" id="deck-reset">Reset to starter</button>
+          </div>
+          <p class="hint">Minimum 40 cards. Leylines at least a third of the deck. Rewards from the
+          campaign are added to your collection — here is where you shape them into something that
+          holds a line.</p>
+        </div>
+      </div>
+      <div class="deck-main">
+        <div class="filters">
+          <input id="deck-search" placeholder="Search cards…" />
+          <select id="deck-filter-type">
+            <option value="">All types</option>
+            <option value="hero">Heroes</option>
+            <option value="leyline">Leylines</option>
+            <option value="cantrip">Cantrips</option>
+            <option value="rite">Rites</option>
+            <option value="weavemark">Weavemarks</option>
+            <option value="relic">Relics</option>
+            <option value="weaving">Weavings</option>
+          </select>
+          <select id="deck-filter-nation"><option value="">All nations</option></select>
+          <label class="chk"><input type="checkbox" id="deck-owned-only" checked /> owned only</label>
+        </div>
+        <div id="collection" class="collection"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== SHOP -->
+  <section id="screen-shop" class="screen">
+    <header class="bar">
+      <button class="back" data-go="home">‹ Haven</button>
+      <h3>Bank of Haven</h3>
+      <span class="bar-right">Fortune secured, future assured · <b id="shop-saga">0</b> Saga</span>
+    </header>
+    <div class="shop-wrap">
+      <p class="shop-intro">The Bankers' Guild pays out in <b>Saga</b> (copper). Twenty Saga make a Myth,
+      twenty Myth make a Legend. The Guild deals in salvage, salvage comes from the mists, and the mists
+      are where you have been going.</p>
+      <div id="shop-grid" class="shop-grid"></div>
+    </div>
+  </section>
+
+  <!-- ================================================== RULES -->
+  <section id="screen-rules" class="screen">
+    <header class="bar">
+      <button class="back" data-go="home">‹ Haven</button>
+      <h3>Rules of the Duel</h3>
+      <span class="bar-right"></span>
+    </header>
+    <div class="rules-wrap" id="rules-body"></div>
+  </section>
+
+  <!-- ================================================== QUICK PLAY -->
+  <section id="screen-quick" class="screen">
+    <header class="bar">
+      <button class="back" data-go="home">‹ Haven</button>
+      <h3>Duel the Corrupted</h3>
+      <span class="bar-right">Choose your banner and an enemy</span>
+    </header>
+    <div class="quick-wrap">
+      <h4>Your nation</h4>
+      <div id="quick-nations" class="nation-grid"></div>
+      <h4>Opponent</h4>
+      <div id="quick-enemies" class="nation-grid"></div>
+      <div class="row center">
+        <label class="chk"><input type="checkbox" id="quick-owned" checked /> use my campaign deck instead</label>
+        <button class="btn big gold" id="quick-start" disabled>Begin the Duel</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== PVP LOBBY -->
+  <section id="screen-lobby" class="screen">
+    <header class="bar">
+      <button class="back" data-go="home">‹ Haven</button>
+      <h3>Online Duel</h3>
+      <span class="bar-right" id="lobby-status">offline</span>
+    </header>
+    <div class="lobby-wrap">
+      <div class="panel">
+        <h4>Your banner for this duel</h4>
+        <select id="lobby-deck"></select>
+        <label class="chk"><input type="checkbox" id="lobby-campaign-deck" /> use my campaign deck</label>
+        <div class="row">
+          <input id="lobby-name" placeholder="Your name in Elandra" />
+        </div>
+        <div class="row">
+          <button class="btn big gold" id="lobby-create">Create a room</button>
+          <input id="lobby-code" placeholder="ROOM CODE" maxlength="4" />
+          <button class="btn big" id="lobby-join">Join</button>
+        </div>
+        <p class="hint" id="lobby-hint">Create a room, share the four-letter code, and the menhirs will do the rest.</p>
+      </div>
+      <div class="panel">
+        <h4>The Pact of Conduct</h4>
+        <p class="hint">Duels are settled by the server, which is to say by the Gods, which is to say
+        neither of you can cheat. Expect roughly twelve turns, four hundred words of banter and one
+        argument about blocker order.</p>
+        <div id="lobby-log" class="lobby-log"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== BATTLE -->
+  <section id="screen-battle" class="screen battle-screen">
+    <div id="battle-board" class="board">
+      <div class="side enemy-side">
+        <div class="player-plate" id="enemy-plate"></div>
+        <div class="rows">
+          <div class="row-zone heroes-row" id="enemy-heroes"></div>
+          <div class="row-zone support-row" id="enemy-support"></div>
+        </div>
+      </div>
+      <div class="mid-strip">
+        <div class="phase-strip" id="phase-strip"></div>
+        <div class="log-strip" id="log-strip"></div>
+        <div class="hint-strip" id="hint-strip"></div>
+      </div>
+      <div class="side my-side">
+        <div class="rows">
+          <div class="row-zone support-row" id="my-support"></div>
+          <div class="row-zone heroes-row" id="my-heroes"></div>
+        </div>
+        <div class="player-plate" id="my-plate"></div>
+      </div>
+    </div>
+
+    <div class="battle-bar">
+      <div class="hand-zone" id="hand"></div>
+      <div class="controls">
+        <div class="mana-pool" id="mana-pool"></div>
+        <div class="btn-col">
+          <button class="btn" id="btn-attune">Attune all</button>
+          <button class="btn" id="btn-main" disabled>To the Clash</button>
+          <button class="btn" id="btn-attack" disabled>Declare Attack</button>
+          <button class="btn" id="btn-pass" disabled>Pass</button>
+          <button class="btn ghost" id="btn-concede">Concede</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="inspect" id="inspect" style="display:none"></div>
+    <div class="modal-layer" id="modal-layer"></div>
+  </section>
+
+  <div id="toast" class="toast"></div>
+</div>
+<script src="config.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "name": "menhirs-fate-weavers-of-elandra",
+  "version": "1.0.0",
+  "description": "Menhirs Fate: Weavers of Elandra \u2014 a story-driven card game with online duels.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node tools/build-static.mjs",
+    "serve:site": "node tools/serve-site.mjs",
+    "verify": "node tools/verify-deployment.mjs",
+    "docker:build": "docker build -t menhirs-fate .",
+    "docker:run": "docker run -p 3000:3000 menhirs-fate",
+    "test": "node --experimental-loader ./tests/loader.mjs tests/engine-sim.mjs && node --experimental-loader ./tests/loader.mjs tests/ui-render.mjs && node --experimental-loader ./tests/loader.mjs tests/flows.mjs && node tests/static-build.mjs",
+    "test:sim": "node --experimental-loader ./tests/loader.mjs tests/engine-sim.mjs",
+    "test:ui": "node --experimental-loader ./tests/loader.mjs tests/ui-render.mjs",
+    "test:pvp": "node --experimental-loader ./tests/loader.mjs tests/pvp.mjs",
+    "test:static": "node tests/static-build.mjs",
+    "test:balance": "node tests/balance.mjs"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ws": "^8.18.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.5"
+  }
+}

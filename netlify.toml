@@ -1,0 +1,19 @@
+# ---------------------------------------------------------------------------
+# Netlify — static hosting (story campaign + AI duels).
+# Online duels need a websocket server, which Netlify cannot host: deploy the
+# Dockerfile to Render/Fly/Railway as well, then set WS_URL (or edit
+# site/config.js after building) to point at it.
+# ---------------------------------------------------------------------------
+[build]
+  command = "node tools/build-static.mjs"
+  publish = "site"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # WS_URL = "wss://your-duel-server.example.com/ws"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
